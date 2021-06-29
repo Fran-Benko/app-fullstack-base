@@ -9,7 +9,7 @@
     <body>
         <main>
             <!-- Navigation bar -->
-            <nav style="background-color:#124580">
+            <nav class="colorFondo" >
                 <div class="nav-wrapper">
                     <a href="#!" class="brand-logo left" style="margin-left: 15px;">Smart Home</a>
                     <ul id="nav-mobile" class="right" style="margin-right: 15px;">
@@ -17,12 +17,69 @@
                     </ul>
                 </div>
             </nav>	
+            
+            <!-- The Modal -->
+            <div id="myModal" class="modal">
+
+                <!-- Modal content -->
+                <div class="modal-content modal-fixed-footer">
+                  <span id='cruzClose' class="close">&times;</span>
+                  <h4>Agregar un nuevo dispositivo</h4>
+                  <div class="row">
+                    <form class="col s12" action="/devices_add" method="POST">
+
+                        <div class="row modal-form-row">
+                            <div class="input-field col s12">
+                                <input name="nombreDispositivo" type="text" class="validate">
+                                <label for="nombreDispositivo">Nombre....</label>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="input-field col s12">
+                                <input name="descripcionDispositivo" type="text" class="validate">
+                                <label for="descripcionDispositivo">Descripcion....</label>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col s12">
+                                <select name="tipoDispositivo" class="browser-default">
+                                    <option value="" disabled selected>Elegir una opcion</option>
+                                    <option value="0">Apagado/Encendido</option>
+                                    <option value="1">Tension Variable</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <button class="btn waves-effect waves-light" type="submit">Submit
+                                <i class="material-icons right">send</i>
+                            </button>
+                        </div>
+                    </form>
+                  </div>
+                </div>
+            </div>
+            
             <!-- Page Body -->
             <div class="container">
                 <br/>
                 <h3>Smart Home Web Client!</h3>
                 <br/>
                 <div class="row">
+       
+                    <div class="col l2 s12 m6">
+                    <a id="boton" class="waves-effect waves-light btn modal-trigger" href="#myModal">Click!!</a>
+                    </div>
+                    <div class="col l2 s12 m6">
+                    <a id="btnCerrar" class="waves-effect waves-light btn">Cerrar</a>
+                </div>
+                <div class="col l8 s12 m12">
+                    <p id="lista"></p>
+                    <ul id="listaDisp" class="collection">
+                        
+                    </ul>
+                </div>
                     <div class="input-field col s12 m12 l12 xl12">
                         <textarea id="textarea_1" class="materialize-textarea" style="height: 150px;" readonly></textarea>
                     </div>
@@ -33,7 +90,7 @@
             </div>	
         </main>
 		<!-- Page Footer -->
-        <footer class="page-footer" style="background-color:#124580">
+        <footer class="page-footer colorFondo" >
             <div class="container">
                 <div class="row">
                     <div class="col l6 s6">
@@ -52,7 +109,11 @@
             </div>
         </footer>
 		<!--JavaScript at end of body for optimized loading-->
-		<script type="text/javascript" src="js/materialize.min.js"></script>
+		<script type="text/javascript" src="./static/js/materialize.min.js"></script>
+        <script type="text/javascript" src="js/MyFramework.js"></script>
+
 		<script type="text/javascript" src="js/main.js"></script>
+
+
     </body>
   </html>

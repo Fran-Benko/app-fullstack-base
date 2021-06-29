@@ -44,7 +44,8 @@ services:
             -                    mysql-server
         ports: 
             -                    "8000:3000"
-        command:                 nodemon /home/node/app/src/index.js
+        command:                 nodemon /home/node/app/src/index.js -i /home/node/app/src/backend/*.json
+        
 
 networks:
     app-fullstack-net:
