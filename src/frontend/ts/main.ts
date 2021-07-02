@@ -4,7 +4,7 @@ class Main implements EventListenerObject, HandlerPost{
     
     
     public main(): void {
-        console.log("Se ejecuto el metodo main!!!");
+        
         this.myFramework = new MyFramework();
         
         let xhr: XMLHttpRequest = new XMLHttpRequest();
@@ -33,7 +33,7 @@ class Main implements EventListenerObject, HandlerPost{
                                       On
                                     </label>
                                   </div>
-                                  <a href="/devices/edit/${disp.id}" class="btn-floating btn-small waves-effect waves-blue btn-edit-device tooltipped" data-position="bottom" data-tooltip="Editar">
+                                  <a id="edit_${disp.id}" class="btn-floating btn-small waves-effect waves-blue btn-edit-device tooltipped" data-position="bottom" data-tooltip="Editar">
                                     <i id ="edit-${disp.id}" class="small material-icons">edit</i>
                                   </a>
                                   <a href="/devices/delete/${disp.id}" class="btn-floating btn-small waves-effect waves-red btn-delete-device tooltipped" data-position="bottom" data-tooltip="Eliminar">
@@ -49,6 +49,11 @@ class Main implements EventListenerObject, HandlerPost{
                             let checkDisp = this.myFramework.getElementById("disp_" + disp.id);
                             checkDisp.addEventListener("click", this);
                         }
+
+                        for (let disp of listaDis) {
+                            let editDisp = this.myFramework.getElementById("edit_" + disp.id);
+                            editDisp.addEventListener("click",this);
+                        }
                     } else {
                         alert("error!!")
                     }
@@ -59,11 +64,58 @@ class Main implements EventListenerObject, HandlerPost{
          
     }
     
+    public editarDispo (ev:Event) {
+    
+        // Pedir la informacion del dispositivo a editar al backend
+        var id = ev.target["id"].split("-")[1];
+
+        console.log(id)
+    
+        let xhr: XMLHttpRequest = new XMLHttpRequest();
+            xhr.onreadystatechange = () => {
+                if (xhr.readyState == 4) {
+                    if (xhr.status == 200) {
+                        console.log("Llego la respuesta!!!!");
+                        console.log(xhr.responseText);
+
+                        let dispFilt: Device = JSON.parse(xhr.responseText);
+                        console.log(dispFilt)
+                        
+                    } else {
+                        alert("error!!")
+                    }
+                }
+            }
+            xhr.open("GET","http://localhost:8000/devices/edit",true)
+            xhr.send(id);
+        
+
+        // Guardar la informacion en variables
+    
+        // Inicializar el modal con la informacion del dispositivo
+    
+        //let modal = this.myFramework.getElementById('myModal');
+        //let span = this.myFramework.getElementById("cruzClose");
+        
+        // Campos del formulario
+        //var nameField: HTMLInputElement = <HTMLInputElement> this.myFramework.getElementById("form-name");
+        //var descField: HTMLInputElement = <HTMLInputElement> this.myFramework.getElementById("form-desc");
+    
+        //modal.style.display = "block";
+    
+        // 
+    
+    
+    }
+
+
     public handleEvent(ev: Event) {
     
     
         let objetoClick: HTMLElement = <HTMLElement>ev.target;
         
+        
+
         
         if (objetoClick.textContent == "+ Agregar") {
             let modal = this.myFramework.getElementById('myModal');
@@ -82,6 +134,8 @@ class Main implements EventListenerObject, HandlerPost{
                     modal.style.display = "none";
                 }
             }
+        } else if (objetoClick.id.split("-")[0] == "edit") {
+            this.editarDispo(ev=ev);
         }
     }
 
@@ -91,6 +145,10 @@ class Main implements EventListenerObject, HandlerPost{
 
     
 }
+
+
+
+
 window.addEventListener("load", ()=> {
     let miObjMain: Main = new Main();
     miObjMain.main();

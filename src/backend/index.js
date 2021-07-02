@@ -35,7 +35,6 @@ app.get('/devices/', function(req, res) {
 // devuelve el dispositivo con el id que viene del parametro
 app.get('/devices/:id', function(req, res) {
     let datosFiltrados = datos.filter(item => item.id == req.params.id);
-
     res.json(datosFiltrados[0]);
 });
 
@@ -94,10 +93,17 @@ app.get('/devices/delete/:id', function(req, res) {
 
 //Editar dispositivos
 //Espera recibir la informacion del form del modal, impacta el cambio en datos.
-app.get('/devices/edit/:id', function(req, res) {
-    let datosFiltrados = datos.filter(item => item.id == req.params.id);
-
-    res.json(datosFiltrados[0]);
+app.get('/devices/edit', function(req, res) {
+    console.log(req.body.id)
+    let datosFiltrados = datos.filter(item => item.id == req.body.id);
+    res.json(datosFiltrados[0])
+    /*
+    console.log(datosFiltrados);
+    console.log('Vista del primer elemento abajo');
+    console.log(datosFiltrados[0]);
+    
+    res.json(datosFiltrados[0])
+    */
 });
 
 app.get('/devices_add', function(req, res) {
